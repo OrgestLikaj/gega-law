@@ -1,0 +1,11 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Gega;Gentjan;;Av.;
+FN:Av. Gentjan Gega
+ORG:Studio Ligjore Gega
+TITLE:Avokat
+TEL;TYPE=WORK,VOICE:+355682010636
+ADR;TYPE=WORK:;Pall. SCY, Nr. 31;Rruga Qemal Stafa;Tiranë;;1000;Albania
+GEO:41.3300212;19.8245315
+URL:https://www.studioligjoregega.al/
+END:VCARD

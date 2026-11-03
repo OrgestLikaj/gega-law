@@ -1,0 +1,791 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import portrait from '../assets/portrait.jpg';
+import entrance from '../assets/office-entrance.jpg';
+import desk from '../assets/office-desk.jpg';
+import logo from '../assets/logo.png';
+import type { Content, Pane } from '../i18n/content';
+import { site } from '../data/site';
+import { url } from '../lib/url';
+
+interface Props {
+  c: Content;
+}
+
+const { c } = Astro.props;
+const dev = import.meta.env.DEV;
+
+// Production drops placeholder panes that have nothing to show yet.
+const hasContent = (p: Pane) => (p.kind === 'text' ? p.body.length > 0 : p.items.length > 0);
+const panes = c.panes.filter((p) => dev || !p.todo || hasContent(p));
+
+const hours = c.labels.days.map((day, i) => {
+  const slot = site.hours.find((h) => (h.days as readonly number[]).includes(i + 1));
+  return { day, time: slot ? `${slot.open} – ${slot.close}` : c.labels.closed, closed: !slot };
+});
+const country = c.lang === 'sq' ? 'Shqipëri' : 'Albania';
+---
+
+<Base c={c}>
+  <section class="hero" id="profile">
+    <div class="wrap hero-grid">
+      <figure class="portrait">
+        <Image
+          src={portrait}
+          alt={c.portraitAlt}
+          widths={[360, 540, 720, 960]}
+          sizes="(max-width: 760px) 80vw, 400px"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
+
+      <div class="intro">
+        <span class="eyebrow">{site.firm}</span>
+        <h1><span class="av">Av.</span> {site.lawyer}</h1>
+        <p class="role">{c.role}</p>
+        <p class="founder">{c.founder}</p>
+
+        <dl class="facts">
+          <div>
+            <dt>{c.labels.tel}</dt>
+            <dd><a href={site.phoneHref}>{site.phone}</a></dd>
+          </div>
+          {site.email && (
+            <div>
+              <dt>Email</dt>
+              <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+            </div>
+          )}
+          <div>
+            <dt>{c.labels.office}</dt>
+            <dd>{site.address.street}, {site.address.building}</dd>
+          </div>
+        </dl>
+
+        <div class="actions">
+          <a class="btn" href={site.phoneHref}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+            {c.labels.call}
+          </a>
+          <a class="btn btn--ghost" href={url(site.vcard)} download>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>
+            {c.labels.vcard}
+          </a>
+          <button class="btn btn--ghost" type="button" data-print>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M6 9V3h12v6M6 18H4v-7h16v7h-2M7 14h10v7H7z"/></svg>
+            {c.labels.print}
+          </button>
+        </div>
+
+        <p class="lead">{c.intro}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="details wrap" data-tabs>
+    <div class="tablist" role="tablist" aria-orientation="vertical">
+      {panes.map((p, i) => (
+        <button
+          role="tab"
+          id={`tab-${p.id}`}
+          aria-controls={p.id}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+          type="button"
+        >
+          {p.title}
+        </button>
+      ))}
+    </div>
+
+    <div class="panes">
+      {panes.map((p, i) => (
+        <section class:list={['pane', { 'is-active': i === 0 }]} id={p.id} role="tabpanel" aria-labelledby={`tab-${p.id}`}>
+          <h2>
+            <button class="pane-toggle" type="button" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`${p.id}-body`}>
+              {p.title}
+              <span aria-hidden="true" class="chev" />
+            </button>
+          </h2>
+          <div class="pane-body" id={`${p.id}-body`}>
+            {dev && p.todo && <p class="todo">{c.labels.todo}</p>}
+            {p.kind === 'text' && p.body.map((para) => <p>{para}</p>)}
+            {p.kind === 'list' && p.items.length > 0 && (
+              <ul class="bullets">{p.items.map((item) => <li>{item}</li>)}</ul>
+            )}
+            {p.kind === 'areas' && (
+              <ul class="areas">
+                {p.items.map((a) => (
+                  <li>
+                    <h3>{a.name}</h3>
+                    <p>{a.text}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
+      ))}
+    </div>
+  </section>
+
+  <section class="studio" id="studio">
+    <div class="wrap studio-grid">
+      <div class="studio-copy">
+        <span class="eyebrow">{c.studio.eyebrow}</span>
+        <h2>{c.studio.title}</h2>
+        <p>{c.studio.text}</p>
+        <Image src={logo} alt="" width={140} height={140} class="seal" />
+      </div>
+      <Image src={entrance} alt={c.studio.altEntrance} widths={[480, 720, 1000]} sizes="(max-width: 860px) 100vw, 40vw" class="photo photo-a" />
+      <Image src={desk} alt={c.studio.altDesk} widths={[480, 720, 1000]} sizes="(max-width: 860px) 100vw, 30vw" class="photo photo-b" />
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <span class="eyebrow">{c.contact.eyebrow}</span>
+        <h2>{c.contact.title}</h2>
+        <p class="muted">{c.contact.text}</p>
+
+        <address class="addr">
+          <strong>{site.firm}</strong><br />
+          {site.address.street}, {site.address.building}<br />
+          {site.address.postcode} {site.address.city}, {country}
+        </address>
+
+        <div class="actions">
+          <a class="btn" href={site.phoneHref}>{c.labels.call} {site.phone}</a>
+          <a class="btn btn--ghost dark" href={site.mapsUrl} target="_blank" rel="noopener">{c.labels.directions}</a>
+        </div>
+
+        <h3 class="hours-title">{c.labels.hours}</h3>
+        <table class="hours">
+          <tbody>
+            {hours.map((h) => (
+              <tr class:list={{ closed: h.closed }}>
+                <th scope="row">{h.day}</th>
+                <td>{h.time}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="map">
+        <iframe
+          title={c.labels.directions}
+          src={site.mapEmbed}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Tabs on desktop, accordion on mobile; both share one "active pane" state.
+  // Without JS every pane stays visible.
+  const root = document.querySelector<HTMLElement>('[data-tabs]');
+  if (root) {
+    root.classList.add('js');
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panes = [...root.querySelectorAll<HTMLElement>('.pane')];
+
+    const activate = (id: string, focus = false) => {
+      panes.forEach((p) => {
+        const on = p.id === id;
+        p.classList.toggle('is-active', on);
+        p.querySelector('.pane-toggle')?.setAttribute('aria-expanded', String(on));
+      });
+      tabs.forEach((t) => {
+        const on = t.getAttribute('aria-controls') === id;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+    };
+
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => activate(t.getAttribute('aria-controls')!));
+      t.addEventListener('keydown', (e) => {
+        const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+        if (!step) return;
+        e.preventDefault();
+        const next = tabs[(i + step + tabs.length) % tabs.length];
+        activate(next.getAttribute('aria-controls')!, true);
+      });
+    });
+
+    root.querySelectorAll<HTMLButtonElement>('.pane-toggle').forEach((b) => {
+      b.addEventListener('click', () => {
+        const pane = b.closest('.pane')!;
+        activate(pane.classList.contains('is-active') ? '' : pane.id);
+      });
+    });
+
+    const fromHash = () => {
+      const id = decodeURIComponent(location.hash.slice(1));
+      if (panes.some((p) => p.id === id)) {
+        activate(id);
+        root.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+    window.addEventListener('hashchange', fromHash);
+    fromHash();
+  }
+
+  document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
+</script>
+
+<style>
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative;
+    background:
+      radial-gradient(circle at 85% 10%, rgb(195 154 69 / 0.14), transparent 45%),
+      linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
+    color: var(--white);
+    padding-block: clamp(48px, 8vw, 96px) 0;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(260px, 400px) 1fr;
+    gap: clamp(32px, 6vw, 80px);
+    align-items: end;
+  }
+
+  .portrait {
+    position: relative;
+    margin: 0 0 -56px;
+    z-index: 1;
+  }
+
+  .portrait::before {
+    content: '';
+    position: absolute;
+    inset: 18px -18px -18px 18px;
+    border: 1px solid var(--gold);
+    z-index: -1;
+  }
+
+  .portrait img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    box-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.5);
+  }
+
+  .intro {
+    padding-bottom: clamp(40px, 6vw, 72px);
+  }
+
+  .intro .eyebrow {
+    color: var(--gold);
+  }
+
+  h1 {
+    margin-top: 18px;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .av {
+    font-size: 0.45em;
+    vertical-align: 0.6em;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+
+  .role {
+    margin: 14px 0 0;
+    font: 500 26px/1.2 var(--serif);
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .founder {
+    margin: 4px 0 0;
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgb(255 255 255 / 0.7);
+  }
+
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 48px;
+    margin: 32px 0 0;
+    padding-top: 24px;
+    border-top: 1px solid rgb(255 255 255 / 0.15);
+  }
+
+  .facts dt {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .facts dd {
+    margin: 2px 0 0;
+    font-size: 16px;
+  }
+
+  .facts a {
+    text-decoration: none;
+  }
+
+  .facts a:hover {
+    color: var(--gold);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .lead {
+    max-width: 56ch;
+    margin: 32px 0 0;
+    color: rgb(255 255 255 / 0.8);
+  }
+
+  @media (max-width: 760px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .portrait {
+      max-width: 340px;
+      margin: 0 18px 0 0;
+    }
+
+    .intro {
+      padding-bottom: 56px;
+    }
+  }
+
+  /* ---------- tabs / accordion ---------- */
+  .details {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: clamp(32px, 6vw, 80px);
+    padding-block: clamp(96px, 10vw, 136px) clamp(64px, 8vw, 104px);
+  }
+
+  .tablist {
+    display: none;
+  }
+
+  .details.js .tablist {
+    display: flex;
+    flex-direction: column;
+    align-self: start;
+    position: sticky;
+    top: 104px;
+    border-left: 1px solid var(--line);
+  }
+
+  .tablist button {
+    margin-left: -1px;
+    padding: 12px 0 12px 22px;
+    border: 0;
+    border-left: 2px solid transparent;
+    background: none;
+    text-align: left;
+    font: 500 14px/1.4 var(--sans);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .tablist button:hover {
+    color: var(--ink);
+  }
+
+  .tablist button[aria-selected='true'] {
+    border-left-color: var(--gold);
+    color: var(--navy);
+    font-weight: 700;
+  }
+
+  .details:not(.js) {
+    grid-template-columns: 1fr;
+  }
+
+  .pane + .pane {
+    margin-top: 48px;
+  }
+
+  .pane h2 {
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 24px;
+  }
+
+  .pane-toggle {
+    all: unset;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .chev {
+    display: none;
+  }
+
+  .pane-body {
+    max-width: 72ch;
+  }
+
+  .pane-body > p:first-of-type:not(.todo) {
+    font-size: 19px;
+    color: var(--ink);
+  }
+
+  .pane-body p {
+    color: #3a404c;
+  }
+
+  .todo {
+    padding: 14px 18px;
+    border: 1px dashed var(--gold);
+    background: #fdf8ec;
+    font-size: 14px;
+    color: var(--gold-ink) !important;
+  }
+
+  .bullets {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .bullets li {
+    position: relative;
+    padding: 12px 0 12px 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 24px;
+    width: 8px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .areas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0 40px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .areas li {
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .areas h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .areas p {
+    margin: 0;
+    font-size: 15px !important;
+    color: var(--muted) !important;
+  }
+
+  /* JS on, desktop: only the active pane is shown */
+  @media (min-width: 861px) {
+    .details.js .pane:not(.is-active) {
+      display: none;
+    }
+
+    .details.js .pane + .pane {
+      margin-top: 0;
+    }
+  }
+
+  /* JS on, mobile: accordion */
+  @media (max-width: 860px) {
+    .details,
+    .details.js {
+      grid-template-columns: 1fr;
+    }
+
+    .details.js .tablist {
+      display: none;
+    }
+
+    .details.js .pane + .pane {
+      margin-top: 0;
+    }
+
+    .details.js .pane {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .details.js .pane h2 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .details.js .pane-toggle {
+      padding: 20px 0;
+      cursor: pointer;
+    }
+
+    .details.js .chev {
+      display: block;
+      width: 12px;
+      height: 12px;
+      border-right: 2px solid var(--gold);
+      border-bottom: 2px solid var(--gold);
+      transform: rotate(45deg);
+      transition: transform 0.2s;
+    }
+
+    .details.js .is-active .chev {
+      transform: rotate(-135deg);
+    }
+
+    .details.js .pane:not(.is-active) .pane-body {
+      display: none;
+    }
+
+    .details.js .pane-body {
+      padding-bottom: 24px;
+    }
+
+    .areas {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---------- studio ---------- */
+  .studio {
+    background: var(--paper);
+    padding-block: clamp(64px, 9vw, 120px);
+  }
+
+  .studio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .studio-copy {
+    padding-right: 16px;
+  }
+
+  .studio h2,
+  .contact h2 {
+    margin: 16px 0 20px;
+    font-size: clamp(36px, 4.5vw, 54px);
+    font-weight: 500;
+    color: var(--navy);
+  }
+
+  .studio-copy p {
+    color: var(--muted);
+  }
+
+  .seal {
+    width: 120px;
+    height: 120px;
+    margin-top: 28px;
+  }
+
+  .photo {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .photo-a {
+    aspect-ratio: 4 / 5;
+  }
+
+  .photo-b {
+    aspect-ratio: 3 / 4;
+    margin-top: 80px;
+  }
+
+  @media (max-width: 860px) {
+    .studio-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .studio-copy {
+      grid-column: 1 / -1;
+      padding: 0;
+    }
+
+    .seal {
+      display: none;
+    }
+
+    .photo-b {
+      margin-top: 40px;
+    }
+  }
+
+  /* ---------- contact ---------- */
+  .contact {
+    padding-block: clamp(64px, 9vw, 120px);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(32px, 6vw, 80px);
+  }
+
+  .muted {
+    color: var(--muted);
+    max-width: 52ch;
+  }
+
+  .addr {
+    margin-top: 28px;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  .addr strong {
+    font: 600 24px/1.4 var(--serif);
+    color: var(--navy);
+  }
+
+  .contact .actions .dark {
+    color: var(--navy);
+  }
+
+  .hours-title {
+    margin: 40px 0 8px;
+    font-size: 26px;
+    color: var(--navy);
+  }
+
+  .hours {
+    width: 100%;
+    max-width: 420px;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+
+  .hours th,
+  .hours td {
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    font-weight: 400;
+  }
+
+  .hours td {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hours .closed {
+    color: var(--muted);
+  }
+
+  .map {
+    position: relative;
+    min-height: 420px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+  }
+
+  .map iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    filter: grayscale(0.35);
+  }
+
+  @media (max-width: 860px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .map {
+      min-height: 320px;
+    }
+  }
+
+  /* ---------- print: a clean one-page profile ---------- */
+  @media print {
+    .hero {
+      background: none;
+      color: #000;
+      padding: 0;
+    }
+
+    .portrait {
+      margin: 0;
+    }
+
+    .portrait::before,
+    .actions,
+    .lead,
+    .tablist,
+    .studio,
+    .map,
+    .todo,
+    .chev {
+      display: none !important;
+    }
+
+    .hero-grid {
+      grid-template-columns: 200px 1fr;
+    }
+
+    .details {
+      display: block;
+      padding: 24px 0 0;
+    }
+
+    .details .pane,
+    .details.js .pane:not(.is-active),
+    .details.js .pane:not(.is-active) .pane-body {
+      display: block !important;
+    }
+
+    .pane h2 {
+      font-size: 24px;
+      margin: 16px 0 8px;
+    }
+
+    .contact {
+      padding: 0;
+    }
+  }
+</style>

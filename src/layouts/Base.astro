@@ -1,0 +1,349 @@
+---
+import '../styles/global.css';
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import portrait from '../assets/portrait.jpg';
+import { content, type Content } from '../i18n/content';
+import { site } from '../data/site';
+import { url } from '../lib/url';
+
+interface Props {
+  c: Content;
+}
+
+const { c } = Astro.props;
+const other = c.lang === 'sq' ? content.en : content.sq;
+const canonical = new URL(url(c.path), Astro.site);
+const ogImage = new URL(portrait.src, Astro.site);
+const year = new Date().getFullYear();
+
+const dayCodes = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LegalService',
+  name: site.firm,
+  url: canonical.href,
+  image: ogImage.href,
+  telephone: site.phone,
+  email: site.email || undefined,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: `${site.address.street}, ${site.address.building}`,
+    addressLocality: site.address.city,
+    postalCode: site.address.postcode,
+    addressCountry: site.address.country,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
+  hasMap: site.mapsUrl,
+  openingHoursSpecification: site.hours.map((h) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: h.days.map((d) => `https://schema.org/${['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'][d - 1]}`),
+    opens: h.open,
+    closes: h.close,
+  })),
+  openingHours: site.hours.map((h) => `${h.days.map((d) => dayCodes[d - 1]).join(',')} ${h.open}-${h.close}`),
+  founder: { '@type': 'Person', name: site.lawyer, jobTitle: c.role },
+};
+---
+
+<!doctype html>
+<html lang={c.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{c.meta.title}</title>
+    <meta name="description" content={c.meta.description} />
+    <link rel="canonical" href={canonical.href} />
+    <link rel="alternate" hreflang="sq" href={new URL(url(content.sq.path), Astro.site).href} />
+    <link rel="alternate" hreflang="en" href={new URL(url(content.en.path), Astro.site).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL(url(content.sq.path), Astro.site).href} />
+    <link rel="icon" type="image/png" href={url("/favicon.png")} />
+    <link rel="apple-touch-icon" href={url("/apple-touch-icon.png")} />
+    <meta name="theme-color" content="#0e1d3a" />
+    {import.meta.env.PUBLIC_NOINDEX && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content={site.firm} />
+    <meta property="og:locale" content={c.locale} />
+    <meta property="og:title" content={c.meta.title} />
+    <meta property="og:description" content={c.meta.description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={ogImage.href} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip sr-only" href="#main">Skip</a>
+    <header class="site-header">
+      <div class="wrap bar">
+        <a class="brand" href={url(c.path)} aria-label={site.firm}>
+          <Image src={logo} alt="" width={48} height={48} loading="eager" />
+          <span>
+            <strong>{site.firm}</strong>
+            <small>Av. {site.lawyer}</small>
+          </span>
+        </a>
+        <nav aria-label="Main">
+          <a href={`${url(c.path)}#profile`}>{c.nav.profile}</a>
+          <a href={`${url(c.path)}#${c.panes[1].id}`}>{c.nav.practice}</a>
+          <a href={`${url(c.path)}#studio`}>{c.nav.studio}</a>
+          <a href={`${url(c.path)}#contact`}>{c.nav.contact}</a>
+        </nav>
+        <div class="tools">
+          <a class="lang" href={url(other.path)} hreflang={other.lang} lang={other.lang}>{c.switchLabel}</a>
+          <a class="call" href={site.phoneHref} aria-label={`${c.labels.call} ${site.phone}`}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z"/></svg>
+            <span>{site.phone}</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap foot">
+        <div class="foot-brand">
+          <Image src={logo} alt="" width={72} height={72} />
+          <div>
+            <strong>{site.firm}</strong>
+            <span>Av. {site.lawyer}</span>
+          </div>
+        </div>
+        <address>
+          {site.address.street}, {site.address.building}<br />
+          {site.address.postcode} {site.address.city}, {c.lang === 'sq' ? 'Shqipëri' : 'Albania'}<br />
+          <a href={site.phoneHref}>{site.phone}</a>
+          {site.email && <><br /><a href={`mailto:${site.email}`}>{site.email}</a></>}
+        </address>
+        <p class="disclaimer">{c.disclaimer}</p>
+      </div>
+      <div class="wrap copy">© {year} {site.firm}. {c.rights}</div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .skip:focus {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    width: auto;
+    height: auto;
+    clip: auto;
+    z-index: 100;
+    padding: 8px 14px;
+    background: var(--gold);
+    color: var(--navy);
+  }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgb(14 29 58 / 0.96);
+    backdrop-filter: blur(8px);
+    color: var(--white);
+    border-bottom: 1px solid rgb(195 154 69 / 0.35);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    min-height: 72px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .brand img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .brand span {
+    display: grid;
+    line-height: 1.2;
+  }
+
+  .brand strong {
+    font: 600 21px/1.1 var(--serif);
+    letter-spacing: 0.02em;
+  }
+
+  .brand small {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  nav {
+    display: flex;
+    gap: 28px;
+    margin-left: auto;
+  }
+
+  nav a,
+  .lang {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: color 0.2s, opacity 0.2s;
+  }
+
+  nav a:hover,
+  .lang:hover {
+    color: var(--gold);
+    opacity: 1;
+  }
+
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .call {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .call:hover {
+    background: var(--gold);
+    color: var(--navy);
+  }
+
+  .call svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media (max-width: 960px) {
+    nav {
+      display: none;
+    }
+
+    .tools {
+      margin-left: auto;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .bar {
+      gap: 12px;
+      min-height: 64px;
+    }
+
+    .brand img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .brand strong {
+      font-size: 18px;
+    }
+
+    .call span {
+      display: none;
+    }
+
+    .call {
+      padding: 10px;
+    }
+
+    .tools {
+      gap: 14px;
+    }
+  }
+
+  .site-footer {
+    background: var(--navy);
+    color: rgb(255 255 255 / 0.78);
+    font-size: 14px;
+    padding-top: 56px;
+  }
+
+  .foot {
+    display: grid;
+    grid-template-columns: auto 1fr 1.4fr;
+    gap: 40px;
+    align-items: start;
+    padding-bottom: 40px;
+  }
+
+  .foot-brand {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .foot-brand div {
+    display: grid;
+  }
+
+  .foot-brand strong {
+    font: 600 22px/1.2 var(--serif);
+    color: var(--white);
+  }
+
+  .foot-brand span {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  address {
+    font-style: normal;
+  }
+
+  address a {
+    text-decoration: none;
+    color: var(--white);
+  }
+
+  .disclaimer {
+    font-size: 13px;
+    color: rgb(255 255 255 / 0.6);
+    margin: 0;
+  }
+
+  .copy {
+    padding-block: 20px;
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+    font-size: 12px;
+    color: rgb(255 255 255 / 0.5);
+  }
+
+  @media (max-width: 860px) {
+    .foot {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  @media print {
+    .site-header,
+    .site-footer {
+      display: none;
+    }
+  }
+</style>
