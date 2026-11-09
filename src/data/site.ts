@@ -4,7 +4,8 @@
 
 export const site = {
   firm: 'Studio Ligjore Gega',
-  lawyer: 'Gentjan Gega', // spelling from the logo and office plaque
+  lawyer: 'Gentjan Gega', // spelling from the logo, plaque and the client's own CV
+  since: 2016, // practising as an attorney (client CV)
   phone: '+355 68 201 0636',
   phoneHref: 'tel:+355682010636',
   email: '', // TODO: client email (shown only when filled in)

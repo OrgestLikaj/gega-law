@@ -1,0 +1,517 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import portrait from '../assets/portrait.jpg';
+import entrance from '../assets/office-entrance.jpg';
+import desk from '../assets/office-desk.jpg';
+import type { Content } from '../i18n/content';
+import { studio } from '../i18n/studio';
+import { site } from '../data/site';
+import { url } from '../lib/url';
+
+interface Props {
+  c: Content;
+}
+
+const { c } = Astro.props;
+const s = studio[c.lang];
+const pad = (n: number) => String(n + 1).padStart(2, '0');
+---
+
+<Base c={c} page="studio" title={s.meta.title} description={s.meta.description}>
+  <section class="hero">
+    <Image src={entrance} alt="" widths={[800, 1254]} sizes="100vw" class="hero-bg" loading="eager" />
+    <div class="wrap hero-inner">
+      <span class="eyebrow">{s.hero.eyebrow}</span>
+      <h1>{s.hero.title}</h1>
+      <p class="values">{s.hero.values}</p>
+      <p class="lead">{s.hero.lead}</p>
+    </div>
+  </section>
+
+  <section class="intro wrap">
+    <p class="intro-lead">{s.intro[0]}</p>
+    <div>
+      {s.intro.slice(1).map((p) => <p>{p}</p>)}
+      <p class="callout">{s.emphasis}</p>
+    </div>
+  </section>
+
+  <section class="band paper">
+    <div class="wrap">
+      <h2 class="section-title">{s.strengths.title}</h2>
+      <ol class="cards">
+        {s.strengths.items.map((item, i) => (
+          <li>
+            <span class="num">{pad(i)}</span>
+            <h3>{item.name}</h3>
+            <p>{item.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="band team">
+    <div class="wrap team-grid">
+      <div>
+        <h2 class="section-title">{s.team.title}</h2>
+        <p class="subtitle">{s.team.subtitle}</p>
+        <Image src={desk} alt={c.studio.altDesk} widths={[480, 720]} sizes="(max-width: 860px) 100vw, 40vw" class="team-photo" />
+      </div>
+      <div class="team-body">
+        {s.team.body.map((p, i) => <p class:list={{ last: i === s.team.body.length - 1 }}>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id={c.practiceAnchor}>
+    <div class="wrap">
+      <h2 class="section-title">{s.practice.title}</h2>
+      <div class="practice">
+        {s.practice.items.map((item) => (
+          <article>
+            <header>
+              <h3>{item.name}</h3>
+              {item.tags && <p class="tags">{item.tags}</p>}
+            </header>
+            <div>
+              {item.body.map((p) => <p>{p}</p>)}
+              {item.principle && (
+                <p class="principle">
+                  <strong>{s.practice.principleLabel}:</strong> {item.principle}
+                </p>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="band paper">
+    <div class="wrap">
+      <h2 class="section-title">{s.process.title}</h2>
+      <ol class="steps">
+        {s.process.steps.map((step, i) => (
+          <li>
+            <span class="num">{pad(i)}</span>
+            <h3>{step.name}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap lawyer">
+      <Image src={portrait} alt={c.portraitAlt} widths={[360, 540]} sizes="(max-width: 760px) 70vw, 320px" class="lawyer-photo" />
+      <div>
+        <span class="eyebrow">{s.lawyer.eyebrow}</span>
+        <h2 class="section-title">Av. {site.lawyer}</h2>
+        <p class="role">{s.lawyer.role}</p>
+        {s.lawyer.body.map((p) => <p>{p}</p>)}
+        <p class="langs"><strong>{s.lawyer.languagesLabel}:</strong> {s.lawyer.languages}</p>
+        <a class="btn" href={url(c.routes.home)}>{s.lawyer.link} →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band standards">
+    <div class="wrap">
+      <h2 class="section-title">{s.standards.title}</h2>
+      <ul>
+        {s.standards.items.map((item) => (
+          <li>
+            <h3>{item.name}</h3>
+            <p>{item.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band closing">
+    <div class="wrap">
+      <span class="eyebrow">{s.principle.title}</span>
+      <blockquote>{s.principle.quote}</blockquote>
+      <p>{s.principle.text}</p>
+      <div class="actions">
+        <a class="btn" href={site.phoneHref}>{c.labels.call} {site.phone}</a>
+        <a class="btn btn--ghost dark" href={`${url(c.routes.home)}#contact`}>{c.nav.contact}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--navy);
+    color: var(--white);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.22;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--navy) 30%, rgb(14 29 58 / 0.6));
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    padding-block: clamp(72px, 12vw, 152px);
+  }
+
+  .hero .eyebrow {
+    color: var(--gold);
+  }
+
+  h1 {
+    margin-top: 20px;
+    max-width: 14ch;
+    font-size: clamp(44px, 7vw, 88px);
+    font-weight: 500;
+  }
+
+  .values {
+    margin: 20px 0 0;
+    font: italic 500 clamp(20px, 2.4vw, 26px)/1.35 var(--serif);
+    color: var(--gold);
+  }
+
+  .lead {
+    max-width: 56ch;
+    margin: 28px 0 0;
+    color: rgb(255 255 255 / 0.82);
+  }
+
+  .band {
+    padding-block: clamp(64px, 9vw, 112px);
+  }
+
+  .paper {
+    background: var(--paper);
+  }
+
+  .section-title {
+    font-size: clamp(34px, 4.4vw, 52px);
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 40px;
+  }
+
+  .num {
+    display: block;
+    font: 500 15px/1 var(--sans);
+    letter-spacing: 0.14em;
+    color: var(--gold-ink);
+  }
+
+  h3 {
+    font-size: 25px;
+    color: var(--navy);
+  }
+
+  /* intro */
+  .intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 6vw, 80px);
+    padding-block: clamp(64px, 9vw, 112px);
+  }
+
+  .intro-lead {
+    font: 500 clamp(24px, 2.6vw, 32px)/1.35 var(--serif);
+    color: var(--navy);
+  }
+
+  .intro p {
+    color: #3a404c;
+  }
+
+  .callout {
+    margin-top: 28px;
+    padding: 4px 0 4px 22px;
+    border-left: 2px solid var(--gold);
+    font: italic 500 22px/1.4 var(--serif);
+    color: var(--navy) !important;
+  }
+
+  /* strengths */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cards li {
+    padding: 32px 28px;
+    background: var(--white);
+    border-top: 2px solid var(--gold);
+  }
+
+  .cards h3 {
+    margin: 18px 0 12px;
+  }
+
+  .cards p,
+  .steps p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--muted);
+  }
+
+  /* team */
+  .team {
+    background: var(--navy);
+    color: rgb(255 255 255 / 0.82);
+  }
+
+  .team .section-title {
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(32px, 6vw, 80px);
+  }
+
+  .subtitle {
+    font: italic 500 24px/1.35 var(--serif);
+    color: var(--gold);
+  }
+
+  .team-photo {
+    margin-top: 32px;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .team-body .last {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid rgb(195 154 69 / 0.4);
+    font: 500 22px/1.4 var(--serif);
+    color: var(--white);
+  }
+
+  /* practice */
+  .practice article {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 16px clamp(32px, 6vw, 80px);
+    padding-block: 36px;
+    border-top: 1px solid var(--line);
+  }
+
+  .practice h3 {
+    font-size: 30px;
+  }
+
+  .tags {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-ink);
+  }
+
+  .practice article p {
+    color: #3a404c;
+  }
+
+  .practice .principle {
+    margin: 20px 0 0;
+    padding: 16px 20px;
+    background: var(--paper);
+    border-left: 2px solid var(--gold);
+    font-size: 15px;
+  }
+
+  .principle strong {
+    color: var(--navy);
+  }
+
+  /* process */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+
+  .steps li {
+    position: relative;
+    padding-top: 28px;
+    border-top: 1px solid var(--gold);
+  }
+
+  .steps li::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .steps h3 {
+    margin: 14px 0 10px;
+    font-size: 22px;
+  }
+
+  /* lawyer */
+  .lawyer {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: clamp(32px, 6vw, 80px);
+    align-items: start;
+  }
+
+  .lawyer-photo {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    box-shadow: 18px 18px 0 -1px var(--paper), 18px 18px 0 0 var(--gold);
+  }
+
+  .lawyer .section-title {
+    margin: 16px 0 6px;
+  }
+
+  .lawyer .role {
+    font: italic 500 22px/1.3 var(--serif);
+    color: var(--gold-ink);
+  }
+
+  .lawyer p {
+    color: #3a404c;
+  }
+
+  .langs strong {
+    color: var(--navy);
+  }
+
+  /* standards */
+  .standards {
+    background: var(--navy-2);
+    color: var(--white);
+  }
+
+  .standards .section-title {
+    color: var(--white);
+  }
+
+  .standards ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0 40px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .standards li {
+    padding: 24px 0;
+    border-top: 1px solid rgb(195 154 69 / 0.4);
+  }
+
+  .standards h3 {
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .standards p {
+    margin: 0;
+    font-size: 15px;
+    color: rgb(255 255 255 / 0.75);
+  }
+
+  /* closing */
+  .closing .wrap {
+    max-width: 900px;
+    text-align: center;
+  }
+
+  .closing blockquote {
+    margin: 20px 0 28px;
+    font: italic 500 clamp(28px, 3.8vw, 44px)/1.25 var(--serif);
+    color: var(--navy);
+  }
+
+  .closing p {
+    color: var(--muted);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .dark {
+    color: var(--navy);
+  }
+
+  .lawyer .btn {
+    margin-top: 16px;
+  }
+
+  @media (max-width: 1000px) {
+    .cards,
+    .standards ul {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .steps {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 40px;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .intro,
+    .team-grid,
+    .practice article,
+    .lawyer {
+      grid-template-columns: 1fr;
+    }
+
+    .cards,
+    .standards ul,
+    .steps {
+      grid-template-columns: 1fr;
+    }
+
+    .lawyer-photo {
+      max-width: 300px;
+    }
+  }
+</style>

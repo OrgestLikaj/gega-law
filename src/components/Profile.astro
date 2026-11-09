@@ -17,7 +17,7 @@ const { c } = Astro.props;
 const dev = import.meta.env.DEV;
 
 // Production drops placeholder panes that have nothing to show yet.
-const hasContent = (p: Pane) => (p.kind === 'text' ? p.body.length > 0 : p.items.length > 0);
+const hasContent = (p: Pane) => Boolean(p.intro?.length || p.items?.length || p.areas?.length || p.outro?.length);
 const panes = c.panes.filter((p) => dev || !p.todo || hasContent(p));
 
 const hours = c.labels.days.map((day, i) => {
@@ -27,7 +27,7 @@ const hours = c.labels.days.map((day, i) => {
 const country = c.lang === 'sq' ? 'Shqipëri' : 'Albania';
 ---
 
-<Base c={c}>
+<Base c={c} page="home" title={c.meta.title} description={c.meta.description}>
   <section class="hero" id="profile">
     <div class="wrap hero-grid">
       <figure class="portrait">
@@ -58,6 +58,10 @@ const country = c.lang === 'sq' ? 'Shqipëri' : 'Albania';
               <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
             </div>
           )}
+          <div>
+            <dt>{c.labels.since}</dt>
+            <dd>{site.since}</dd>
+          </div>
           <div>
             <dt>{c.labels.office}</dt>
             <dd>{site.address.street}, {site.address.building}</dd>
@@ -111,13 +115,11 @@ const country = c.lang === 'sq' ? 'Shqipëri' : 'Albania';
           </h2>
           <div class="pane-body" id={`${p.id}-body`}>
             {dev && p.todo && <p class="todo">{c.labels.todo}</p>}
-            {p.kind === 'text' && p.body.map((para) => <p>{para}</p>)}
-            {p.kind === 'list' && p.items.length > 0 && (
-              <ul class="bullets">{p.items.map((item) => <li>{item}</li>)}</ul>
-            )}
-            {p.kind === 'areas' && (
+            {p.intro?.map((para) => <p>{para}</p>)}
+            {p.items && <ul class="bullets">{p.items.map((item) => <li>{item}</li>)}</ul>}
+            {p.areas && (
               <ul class="areas">
-                {p.items.map((a) => (
+                {p.areas.map((a) => (
                   <li>
                     <h3>{a.name}</h3>
                     <p>{a.text}</p>
@@ -125,10 +127,18 @@ const country = c.lang === 'sq' ? 'Shqipëri' : 'Albania';
                 ))}
               </ul>
             )}
+            {p.outro?.map((para) => <p class="outro">{para}</p>)}
           </div>
         </section>
       ))}
     </div>
+  </section>
+
+  <section class="quote">
+    <figure class="wrap">
+      <blockquote>{c.quote}</blockquote>
+      <figcaption>Av. {site.lawyer}</figcaption>
+    </figure>
   </section>
 
   <section class="studio" id="studio">
@@ -137,6 +147,7 @@ const country = c.lang === 'sq' ? 'Shqipëri' : 'Albania';
         <span class="eyebrow">{c.studio.eyebrow}</span>
         <h2>{c.studio.title}</h2>
         <p>{c.studio.text}</p>
+        <a class="btn btn--ghost dark" href={url(c.routes.studio)}>{c.labels.more} →</a>
         <Image src={logo} alt="" width={140} height={140} class="seal" />
       </div>
       <Image src={entrance} alt={c.studio.altEntrance} widths={[480, 720, 1000]} sizes="(max-width: 860px) 100vw, 40vw" class="photo photo-a" />
@@ -469,8 +480,12 @@ const country = c.lang === 'sq' ? 'Shqipëri' : 'Albania';
     color: var(--gold-ink) !important;
   }
 
+  .outro {
+    margin-top: 1.4em;
+  }
+
   .bullets {
-    margin: 0;
+    margin: 0 0 1em;
     padding: 0;
     list-style: none;
   }
@@ -585,6 +600,41 @@ const country = c.lang === 'sq' ? 'Shqipëri' : 'Albania';
     }
   }
 
+  /* ---------- quote ---------- */
+  .quote {
+    background: var(--navy);
+    color: var(--white);
+    padding-block: clamp(56px, 8vw, 96px);
+    text-align: center;
+  }
+
+  .quote figure {
+    margin: 0 auto;
+    max-width: 920px;
+  }
+
+  .quote blockquote {
+    margin: 0;
+    font: 500 clamp(26px, 3.4vw, 40px)/1.3 var(--serif);
+    font-style: italic;
+  }
+
+  .quote blockquote::before {
+    content: '“';
+    display: block;
+    font-size: 2.2em;
+    line-height: 0.6;
+    color: var(--gold);
+  }
+
+  .quote figcaption {
+    margin-top: 24px;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
   /* ---------- studio ---------- */
   .studio {
     background: var(--paper);
@@ -681,7 +731,7 @@ const country = c.lang === 'sq' ? 'Shqipëri' : 'Albania';
     color: var(--navy);
   }
 
-  .contact .actions .dark {
+  .dark {
     color: var(--navy);
   }
 
@@ -757,6 +807,7 @@ const country = c.lang === 'sq' ? 'Shqipëri' : 'Albania';
     .actions,
     .lead,
     .tablist,
+    .quote,
     .studio,
     .map,
     .todo,
