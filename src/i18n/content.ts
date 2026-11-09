@@ -41,6 +41,7 @@ export interface Content {
     days: string[]; // Monday first
     todo: string;
     more: string;
+    menu: string;
   };
   intro: string;
   panes: Pane[];
@@ -50,6 +51,7 @@ export interface Content {
   portraitAlt: string;
   disclaimer: string;
   rights: string;
+  credit: string;
 }
 
 const sq: Content = {
@@ -79,6 +81,7 @@ const sq: Content = {
     days: ['E hënë', 'E martë', 'E mërkurë', 'E enjte', 'E premte', 'E shtunë', 'E diel'],
     todo: 'Për t’u plotësuar nga klienti',
     more: 'Njihuni me studion',
+    menu: 'Menuja',
   },
   intro:
     'Që prej vitit 2016, Av. Gentjan Gega ushtron profesionin e avokatit dhe drejton Studio Ligjore Gega, duke e orientuar veprimtarinë e tij drejt përfaqësimit juridik, këshillimit ligjor dhe ndërtimit të zgjidhjeve të argumentuara, të përshtatura sipas specifikave të çdo rasti.',
@@ -186,6 +189,7 @@ const sq: Content = {
   disclaimer:
     'Informacioni në këtë faqe ka karakter të përgjithshëm dhe nuk përbën këshillë ligjore. Kontakti përmes kësaj faqeje nuk krijon marrëdhënie avokat–klient.',
   rights: 'Të gjitha të drejtat e rezervuara.',
+  credit: 'Dizajnuar dhe zhvilluar nga',
 };
 
 const en: Content = {
@@ -215,6 +219,7 @@ const en: Content = {
     days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
     todo: 'To be provided by the client',
     more: 'About the studio',
+    menu: 'Menu',
   },
   intro:
     'Since 2016 Gentjan Gega has practised as an attorney and led Studio Ligjore Gega, focusing his work on legal representation, legal advice and well-argued solutions tailored to the specifics of each case.',
@@ -322,6 +327,7 @@ const en: Content = {
   disclaimer:
     'The information on this website is general in nature and does not constitute legal advice. Contacting the studio through this website does not create an attorney–client relationship.',
   rights: 'All rights reserved.',
+  credit: 'Designed and developed by',
 };
 
 export const content = { sq, en } satisfies Record<Lang, Content>;
