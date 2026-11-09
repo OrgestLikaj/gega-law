@@ -1,5 +1,6 @@
-// Profile page copy, per language. The Albanian text is the client's own
-// ("Gentjan Gega.docx", Nov 2026); the English is our translation of it.
+// Profile page copy, per language. Based on the client's own text
+// ("Gentjan Gega.docx", Nov 2026), rewritten in the third person at the
+// user's request; the English is our translation.
 // Panes marked `todo: true` are waiting for real information from the client:
 // they render as dashed placeholders in `astro dev` and are left out of the
 // production build while they are empty.
@@ -80,23 +81,23 @@ const sq: Content = {
     more: 'Njihuni me studion',
   },
   intro:
-    'Që prej vitit 2016, ushtroj profesionin e avokatit dhe drejtoj Studio Ligjore Gega, duke e orientuar veprimtarinë time drejt përfaqësimit juridik, këshillimit ligjor dhe ndërtimit të zgjidhjeve të argumentuara, të përshtatura sipas specifikave të çdo rasti.',
+    'Që prej vitit 2016, Av. Gentjan Gega ushtron profesionin e avokatit dhe drejton Studio Ligjore Gega, duke e orientuar veprimtarinë e tij drejt përfaqësimit juridik, këshillimit ligjor dhe ndërtimit të zgjidhjeve të argumentuara, të përshtatura sipas specifikave të çdo rasti.',
   panes: [
     {
       id: 'biografia',
       title: 'Biografia',
       intro: [
-        'Jam Avokat Gentjan Gega, themelues dhe drejtues i Studio Ligjore Gega, me seli në Tiranë, Shqipëri. Formimi im akademik, përvoja institucionale dhe ushtrimi i profesionit të avokatit përbëjnë bazën e një qasjeje profesionale të orientuar drejt analizës së thelluar juridike, strategjisë së përfaqësimit dhe mbrojtjes së të drejtave dhe interesave të ligjshme të klientëve.',
-        'Rrugëtimi im profesional është karakterizuar nga ndërthurja e përvojës në strukturat e Policisë së Shtetit me ushtrimin e pavarur të profesionit të avokatit. Kjo përvojë më ka ndihmuar të ndërtoj një këndvështrim praktik mbi zbatimin e ligjit, funksionimin institucional dhe rëndësinë e analizës së kujdesshme të fakteve, provave dhe rrethanave që përcaktojnë trajtimin juridik të një çështjeje.',
-        'Që prej vitit 2016, ushtroj profesionin e avokatit dhe drejtoj Studio Ligjore Gega, duke e orientuar veprimtarinë time drejt përfaqësimit juridik, këshillimit ligjor dhe ndërtimit të zgjidhjeve të argumentuara, të përshtatura sipas specifikave të çdo rasti.',
-        'Në ushtrimin e profesionit, i kushtoj rëndësi të veçantë përgatitjes profesionale, rigorozitetit në interpretimin dhe zbatimin e ligjit, analizës së provave dhe vlerësimit të kujdesshëm të mundësive procedurale. Besoj se çdo çështje kërkon një qasje individuale, një strategji të menduar dhe një përfaqësim të mbështetur në argumente juridike të qëndrueshme.',
+        'Av. Gentjan Gega është themelues dhe drejtues i Studio Ligjore Gega, me seli në Tiranë, Shqipëri. Formimi i tij akademik, përvoja institucionale dhe ushtrimi i profesionit të avokatit përbëjnë bazën e një qasjeje profesionale të orientuar drejt analizës së thelluar juridike, strategjisë së përfaqësimit dhe mbrojtjes së të drejtave dhe interesave të ligjshme të klientëve.',
+        'Rrugëtimi i tij profesional është karakterizuar nga ndërthurja e përvojës në strukturat e Policisë së Shtetit me ushtrimin e pavarur të profesionit të avokatit. Kjo përvojë i ka ndihmuar të ndërtojë një këndvështrim praktik mbi zbatimin e ligjit, funksionimin institucional dhe rëndësinë e analizës së kujdesshme të fakteve, provave dhe rrethanave që përcaktojnë trajtimin juridik të një çështjeje.',
+        'Që prej vitit 2016, ai ushtron profesionin e avokatit dhe drejton Studio Ligjore Gega, duke e orientuar veprimtarinë e tij drejt përfaqësimit juridik, këshillimit ligjor dhe ndërtimit të zgjidhjeve të argumentuara, të përshtatura sipas specifikave të çdo rasti.',
+        'Në ushtrimin e profesionit, Av. Gega i kushton rëndësi të veçantë përgatitjes profesionale, rigorozitetit në interpretimin dhe zbatimin e ligjit, analizës së provave dhe vlerësimit të kujdesshëm të mundësive procedurale. Ai beson se çdo çështje kërkon një qasje individuale, një strategji të menduar dhe një përfaqësim të mbështetur në argumente juridike të qëndrueshme.',
       ],
     },
     {
       id: 'fushat',
       title: 'Fushat e praktikës',
       intro: [
-        'Praktika ime profesionale përfshin disa fusha të së drejtës, me fokus në përfaqësimin juridik, këshillimin ligjor dhe trajtimin e mosmarrëveshjeve të individëve, familjeve dhe subjekteve tregtare.',
+        'Praktika e tij profesionale përfshin disa fusha të së drejtës, me fokus në përfaqësimin juridik, këshillimin ligjor dhe trajtimin e mosmarrëveshjeve të individëve, familjeve dhe subjekteve tregtare.',
       ],
       areas: [
         { name: 'E drejta penale', text: 'Mbrojtja dhe përfaqësimi juridik në çështjet penale, me vëmendje të veçantë ndaj garancive procedurale, të drejtave të personit, analizës së provave dhe zbatimit të ligjit penal material dhe procedural.' },
@@ -116,7 +117,7 @@ const sq: Content = {
       id: 'arsimimi',
       title: 'Arsimimi',
       intro: [
-        'Formimi im akademik juridik nisi në Fakultetin e Drejtësisë të Universitetit të Tiranës, ku përfundova studimet e larta në vitin 2013. Në vijim, kam përfunduar dy programe master, duke zgjeruar njohuritë dhe formimin tim në fushat e së drejtës private, biznesit dhe së drejtës së biznesit.',
+        'Formimi i tij akademik juridik nisi në Fakultetin e Drejtësisë të Universitetit të Tiranës, ku përfundoi studimet e larta në vitin 2013. Në vijim, ka përfunduar dy programe master, duke zgjeruar njohuritë dhe formimin e tij në fushat e së drejtës private, biznesit dhe së drejtës së biznesit.',
       ],
       items: [
         'Master i Shkencave në të Drejtën Private dhe të Biznesit',
@@ -125,36 +126,36 @@ const sq: Content = {
       ],
       outro: [
         'Ky formim akademik përbën një bazë të rëndësishme për trajtimin e marrëdhënieve juridike private, detyrimeve kontraktore, mosmarrëveshjeve tregtare dhe problematikave ligjore që lidhen me veprimtarinë e subjekteve të biznesit.',
-        'Ndërthurja e studimeve juridike me përvojën institucionale dhe praktikën profesionale përforcon qasjen time ndaj çështjeve që kërkojnë jo vetëm njohjen e dispozitave ligjore, por edhe interpretimin e tyre në raport me faktet, dokumentacionin dhe pasojat juridike konkrete.',
+        'Ndërthurja e studimeve juridike me përvojën institucionale dhe praktikën profesionale përforcon qasjen e tij ndaj çështjeve që kërkojnë jo vetëm njohjen e dispozitave ligjore, por edhe interpretimin e tyre në raport me faktet, dokumentacionin dhe pasojat juridike konkrete.',
       ],
     },
     {
       id: 'pervoja',
       title: 'Përvoja',
       intro: [
-        'Përpara se t’i përkushtohesha ushtrimit të profesionit të avokatit, kam punuar në strukturat e Policisë së Shtetit. Kjo periudhë përbën një pjesë të rëndësishme të rrugëtimit tim profesional dhe ka kontribuar në formimin e një perspektive praktike mbi zbatimin e ligjit dhe funksionimin e institucioneve.',
-        'Që prej vitit 2016, veprimtaria ime profesionale është përqendruar në ushtrimin e profesionit të avokatit dhe drejtimin e Studio Ligjore Gega. Në këtë kuadër, angazhimi im përfshin analizimin e problematikave juridike, identifikimin e bazës ligjore të kërkimeve, vlerësimin e provave dhe dokumentacionit, si dhe ndërtimin e strategjive të përshtatura për mbrojtjen e interesave të ligjshme të klientëve.',
+        'Përpara se t’i përkushtohej ushtrimit të profesionit të avokatit, Av. Gega ka punuar në strukturat e Policisë së Shtetit. Kjo periudhë përbën një pjesë të rëndësishme të rrugëtimit të tij profesional dhe ka kontribuar në formimin e një perspektive praktike mbi zbatimin e ligjit dhe funksionimin e institucioneve.',
+        'Që prej vitit 2016, veprimtaria e tij profesionale është përqendruar në ushtrimin e profesionit të avokatit dhe drejtimin e Studio Ligjore Gega. Në këtë kuadër, angazhimi i tij përfshin analizimin e problematikave juridike, identifikimin e bazës ligjore të kërkimeve, vlerësimin e provave dhe dokumentacionit, si dhe ndërtimin e strategjive të përshtatura për mbrojtjen e interesave të ligjshme të klientëve.',
         'Çdo çështje trajtohet duke marrë në konsideratë rrethanat konkrete, legjislacionin e zbatueshëm dhe kërkesat procedurale përkatëse. Përgatitja e kujdesshme, parashikimi i kundërshtimeve të mundshme dhe argumentimi i strukturuar janë elemente thelbësore të kësaj qasjeje.',
       ],
     },
     {
       id: 'publikime',
       title: 'Publikime',
-      intro: ['Përveç ushtrimit të profesionit të avokatit, jam bashkautor i gjashtë publikimeve shkencore.'],
+      intro: ['Përveç ushtrimit të profesionit të avokatit, Av. Gega është bashkautor i gjashtë publikimeve shkencore.'],
       outro: [
-        'Ky kontribut pasqyron interesin tim për studimin e çështjeve juridike dhe zhvillimin e mendimit shkencor në fushën e së drejtës. Veprimtaria akademike dhe ajo profesionale plotësojnë njëra-tjetrën, duke theksuar rëndësinë e analizës së argumentuar, interpretimit të kujdesshëm të dispozitave ligjore dhe vlerësimit kritik të problematikave që paraqiten në praktikë.',
-        'E konsideroj zhvillimin e vazhdueshëm profesional një pjesë të rëndësishme të përgjegjësisë së avokatit, veçanërisht në kushtet e ndryshimeve legjislative dhe zhvillimit të jurisprudencës.',
+        'Ky kontribut pasqyron interesin e tij për studimin e çështjeve juridike dhe zhvillimin e mendimit shkencor në fushën e së drejtës. Veprimtaria akademike dhe ajo profesionale plotësojnë njëra-tjetrën, duke theksuar rëndësinë e analizës së argumentuar, interpretimit të kujdesshëm të dispozitave ligjore dhe vlerësimit kritik të problematikave që paraqiten në praktikë.',
+        'Ai e konsideron zhvillimin e vazhdueshëm profesional një pjesë të rëndësishme të përgjegjësisë së avokatit, veçanërisht në kushtet e ndryshimeve legjislative dhe zhvillimit të jurisprudencës.',
       ],
     },
     {
       id: 'filozofia',
       title: 'Filozofia profesionale',
       intro: [
-        'Filozofia ime profesionale mbështetet në katër shtylla kryesore: analizën juridike, strategjinë e përfaqësimit, integritetin profesional dhe përgjegjësinë ndaj klientit.',
+        'Filozofia e tij profesionale mbështetet në katër shtylla kryesore: analizën juridike, strategjinë e përfaqësimit, integritetin profesional dhe përgjegjësinë ndaj klientit.',
         'Përfaqësimi juridik cilësor kërkon më shumë sesa njohjen formale të ligjit. Ai kërkon kuptimin e plotë të rrethanave faktike, shqyrtimin e dokumentacionit, identifikimin e argumenteve vendimtare dhe vlerësimin paraprak të kundërshtimeve që mund të paraqiten gjatë procedurës.',
         'Për këtë arsye, çdo çështje duhet të trajtohet me kujdes, duke përcaktuar bazën juridike, objektivat e përfaqësimit dhe rrugët procedurale që mund të ndiqen. Një strategji e qëndrueshme ndërtohet mbi fakte të verifikueshme, argumente ligjore dhe një vlerësim realist të mundësive dhe rreziqeve.',
-        'Në marrëdhënien me klientët, i kushtoj rëndësi komunikimit të qartë, konfidencialitetit profesional dhe informimit mbi pozicionin juridik të çështjes. Besoj se marrëdhënia profesionale duhet të ndërtohet mbi besimin, transparencën dhe kuptimin e qartë të të drejtave, detyrimeve dhe alternativave ligjore në dispozicion.',
-        'E konsideroj profesionin e avokatit një përgjegjësi që kërkon integritet, përgatitje të vazhdueshme, vëmendje ndaj hollësive dhe respektim të parimeve themelore të drejtësisë. Angazhimi im është që çdo çështje e marrë përsipër të trajtohet me seriozitet, analizë të kujdesshme dhe argumentim juridik të strukturuar, duke i ofruar klientit një vlerësim profesional të pozicionit të tij dhe të rrugëve ligjore në dispozicion.',
+        'Në marrëdhënien me klientët, ai i kushton rëndësi komunikimit të qartë, konfidencialitetit profesional dhe informimit mbi pozicionin juridik të çështjes. Ai beson se marrëdhënia profesionale duhet të ndërtohet mbi besimin, transparencën dhe kuptimin e qartë të të drejtave, detyrimeve dhe alternativave ligjore në dispozicion.',
+        'Av. Gega e konsideron profesionin e avokatit një përgjegjësi që kërkon integritet, përgatitje të vazhdueshme, vëmendje ndaj hollësive dhe respektim të parimeve themelore të drejtësisë. Angazhimi i tij është që çdo çështje e marrë përsipër të trajtohet me seriozitet, analizë të kujdesshme dhe argumentim juridik të strukturuar, duke i ofruar klientit një vlerësim profesional të pozicionit të tij dhe të rrugëve ligjore në dispozicion.',
       ],
     },
     {
@@ -168,7 +169,7 @@ const sq: Content = {
     { id: 'perfaqesime', title: 'Përfaqësime të spikatura', todo: true },
   ],
   quote:
-    'Besoj se përfaqësimi juridik cilësor ndërtohet mbi njohjen e ligjit, analizën e fakteve, forcën e argumentit dhe përgjegjësinë profesionale.',
+    'Përfaqësimi juridik cilësor ndërtohet mbi njohjen e ligjit, analizën e fakteve, forcën e argumentit dhe përgjegjësinë profesionale.',
   studio: {
     eyebrow: 'Studio',
     title: 'Studio Ligjore Gega',
@@ -216,23 +217,23 @@ const en: Content = {
     more: 'About the studio',
   },
   intro:
-    'Since 2016 I have practised as an attorney and led Studio Ligjore Gega, focusing my work on legal representation, legal advice and well-argued solutions tailored to the specifics of each case.',
+    'Since 2016 Gentjan Gega has practised as an attorney and led Studio Ligjore Gega, focusing his work on legal representation, legal advice and well-argued solutions tailored to the specifics of each case.',
   panes: [
     {
       id: 'biography',
       title: 'Biography',
       intro: [
-        'I am attorney Gentjan Gega, founder and head of Studio Ligjore Gega, based in Tirana, Albania. My academic background, institutional experience and practice as an attorney form the basis of a professional approach focused on in-depth legal analysis, representation strategy and the protection of my clients’ rights and legitimate interests.',
-        'My professional path combines experience in the structures of the Albanian State Police with the independent practice of law. This experience has helped me build a practical perspective on law enforcement, on how institutions work, and on the importance of carefully analysing the facts, evidence and circumstances that determine the legal treatment of a matter.',
-        'Since 2016 I have practised as an attorney and led Studio Ligjore Gega, focusing my work on legal representation, legal advice and well-argued solutions tailored to the specifics of each case.',
-        'In my practice I place particular importance on professional preparation, rigour in interpreting and applying the law, analysis of evidence and careful assessment of procedural options. I believe every matter requires an individual approach, a considered strategy and representation built on sound legal arguments.',
+        'Gentjan Gega is an attorney and the founder and head of Studio Ligjore Gega, based in Tirana, Albania. His academic background, institutional experience and practice as an attorney form the basis of a professional approach focused on in-depth legal analysis, representation strategy and the protection of his clients’ rights and legitimate interests.',
+        'His professional path combines experience in the structures of the Albanian State Police with the independent practice of law. This experience has helped him build a practical perspective on law enforcement, on how institutions work, and on the importance of carefully analysing the facts, evidence and circumstances that determine the legal treatment of a matter.',
+        'Since 2016 he has practised as an attorney and led Studio Ligjore Gega, focusing his work on legal representation, legal advice and well-argued solutions tailored to the specifics of each case.',
+        'In his practice he places particular importance on professional preparation, rigour in interpreting and applying the law, analysis of evidence and careful assessment of procedural options. He believes every matter requires an individual approach, a considered strategy and representation built on sound legal arguments.',
       ],
     },
     {
       id: 'practice-areas',
       title: 'Practice Areas',
       intro: [
-        'My practice covers several areas of law, focusing on legal representation, legal advice and the resolution of disputes for individuals, families and businesses.',
+        'His practice covers several areas of law, focusing on legal representation, legal advice and the resolution of disputes for individuals, families and businesses.',
       ],
       areas: [
         { name: 'Criminal Law', text: 'Defence and legal representation in criminal matters, with particular attention to procedural safeguards, the rights of the person, analysis of evidence and the application of substantive and procedural criminal law.' },
@@ -252,7 +253,7 @@ const en: Content = {
       id: 'education',
       title: 'Education',
       intro: [
-        'My legal education began at the Faculty of Law of the University of Tirana, where I graduated in 2013. I went on to complete two master’s programmes, broadening my knowledge of private law, business and business law.',
+        'His legal education began at the Faculty of Law of the University of Tirana, where he graduated in 2013. He went on to complete two master’s programmes, broadening his knowledge of private law, business and business law.',
       ],
       items: [
         'Master of Science in Private and Business Law',
@@ -261,36 +262,36 @@ const en: Content = {
       ],
       outro: [
         'This academic background is an important foundation for handling private legal relations, contractual obligations, commercial disputes and the legal issues connected with business activity.',
-        'Combining legal studies with institutional experience and professional practice strengthens my approach to matters that require not only knowledge of the law, but also its interpretation in light of the facts, the documents and the concrete legal consequences.',
+        'Combining legal studies with institutional experience and professional practice strengthens his approach to matters that require not only knowledge of the law, but also its interpretation in light of the facts, the documents and the concrete legal consequences.',
       ],
     },
     {
       id: 'experience',
       title: 'Experience',
       intro: [
-        'Before dedicating myself to the practice of law, I worked in the structures of the Albanian State Police. This period is an important part of my professional path and helped form a practical perspective on law enforcement and on how institutions work.',
-        'Since 2016 my work has focused on practising as an attorney and leading Studio Ligjore Gega. This includes analysing legal problems, identifying the legal basis of claims, assessing evidence and documents, and building strategies tailored to protect my clients’ legitimate interests.',
+        'Before dedicating himself to the practice of law, Gentjan Gega worked in the structures of the Albanian State Police. This period is an important part of his professional path and helped form a practical perspective on law enforcement and on how institutions work.',
+        'Since 2016 his work has focused on practising as an attorney and leading Studio Ligjore Gega. This includes analysing legal problems, identifying the legal basis of claims, assessing evidence and documents, and building strategies tailored to protect his clients’ legitimate interests.',
         'Every matter is handled in light of its specific circumstances, the applicable legislation and the relevant procedural requirements. Careful preparation, anticipating possible objections and structured argument are essential to this approach.',
       ],
     },
     {
       id: 'publications',
       title: 'Publications',
-      intro: ['Alongside my practice, I am co-author of six scientific publications.'],
+      intro: ['Alongside his practice, Gentjan Gega is co-author of six scientific publications.'],
       outro: [
-        'This work reflects my interest in the study of legal issues and the development of legal scholarship. Academic and professional work complement each other, underlining the importance of reasoned analysis, careful interpretation of legal provisions and critical assessment of the problems that arise in practice.',
-        'I consider continuous professional development an important part of an attorney’s responsibility, especially as legislation changes and case law evolves.',
+        'This work reflects his interest in the study of legal issues and the development of legal scholarship. Academic and professional work complement each other, underlining the importance of reasoned analysis, careful interpretation of legal provisions and critical assessment of the problems that arise in practice.',
+        'He considers continuous professional development an important part of an attorney’s responsibility, especially as legislation changes and case law evolves.',
       ],
     },
     {
       id: 'philosophy',
       title: 'Professional Philosophy',
       intro: [
-        'My professional philosophy rests on four pillars: legal analysis, representation strategy, professional integrity and responsibility to the client.',
+        'His professional philosophy rests on four pillars: legal analysis, representation strategy, professional integrity and responsibility to the client.',
         'Quality legal representation requires more than formal knowledge of the law. It requires a full understanding of the facts, review of the documents, identification of the decisive arguments and anticipation of the objections that may arise during the proceedings.',
         'For this reason every matter must be handled with care, establishing the legal basis, the objectives of the representation and the procedural routes available. A sound strategy is built on verifiable facts, legal arguments and a realistic assessment of opportunities and risks.',
-        'In my relationship with clients I value clear communication, professional confidentiality and keeping them informed of the legal position of their matter. I believe the professional relationship must be built on trust, transparency and a clear understanding of the rights, obligations and legal alternatives available.',
-        'I regard the legal profession as a responsibility that demands integrity, continuous preparation, attention to detail and respect for the fundamental principles of justice. My commitment is that every matter I take on is handled with seriousness, careful analysis and structured legal argument, giving the client a professional assessment of their position and of the legal routes available.',
+        'In his relationship with clients he values clear communication, professional confidentiality and keeping them informed of the legal position of their matter. He believes the professional relationship must be built on trust, transparency and a clear understanding of the rights, obligations and legal alternatives available.',
+        'He regards the legal profession as a responsibility that demands integrity, continuous preparation, attention to detail and respect for the fundamental principles of justice. His commitment is that every matter he takes on is handled with seriousness, careful analysis and structured legal argument, giving the client a professional assessment of their position and of the legal routes available.',
       ],
     },
     {
@@ -304,7 +305,7 @@ const en: Content = {
     { id: 'representations', title: 'Notable Representations', todo: true },
   ],
   quote:
-    'I believe quality legal representation is built on knowledge of the law, analysis of the facts, the strength of the argument and professional responsibility.',
+    'Quality legal representation is built on knowledge of the law, analysis of the facts, the strength of the argument and professional responsibility.',
   studio: {
     eyebrow: 'The Studio',
     title: 'Studio Ligjore Gega',

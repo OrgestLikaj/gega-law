@@ -24,7 +24,7 @@ the production build when they are still empty.
 ## Content source
 
 The profile (home) and the studio page use the client's own text from
-"Gentjan Gega.docx" (Nov 2026). Albanian is his wording; the English is our
+"Gentjan Gega.docx" (Nov 2026). The profile is rewritten in the third person; the studio page keeps his wording. The English is our
 translation and should be read by him before launch.
 
 ## Open questions for the client
